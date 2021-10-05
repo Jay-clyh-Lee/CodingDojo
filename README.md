@@ -1,1 +1,1 @@
-# CodingDojoAssignments
+# CodingDojo Assignments
