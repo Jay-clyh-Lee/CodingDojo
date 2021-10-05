@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyBay WF2021 Yellow Belt Exam</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- header -->
+    <header>
+        <div class='row'>
+            <img src="images/leaf.png" alt="leaf" id='leaf'>
+            <h1>EasyBay</h1>
+            <div id='search-wrapper'>
+                <input type="text" name="searchBar" id="searchBar" placeholder="Search for anything">
+                <button>
+                    <img src="images/search-dark.png" alt="search-dark">
+                </button>
+            </div>
+            <a href="">Sign In</a>
+            <button onclick='alert("Your cart is empty")'>
+                <img id='cart' src="images/cart-dark.png" alt="cart">
+            </button>
+        </div>
+        <div class='row'>
+            <a href="">Aeonium</a>
+            <a href="">Andormischus</a>
+            <a href="">Agave</a>
+            <a href="">Aloe</a>
+            <a href="">Anacampseros</a>
+            <a href="">Aristaloe</a>
+            <a href="">More...</a>
+        </div>
+    </header>
+    <!-- main -->
+    <div id='main'>
+        <p>Your Source for Serious Succulent Specialties</p>
+        <div class='row'>
+            <div class='column' id='leftBlock'>
+                <h2 >Discover Succ-ulent varieties one pot or rack at a time!</h2>
+                <h2>Discover <img src="images/arrow-light.png" alt="rightArrow"></h2>
+            </div>
+            
+            <!-- hover effect section -->
+            <div class='column' id='middleBlock'>
+                <img src="images/succulents-1.jpg" onmouseover='this.src="images/succulents-2.jpg"' onmouseout='this.src="images/succulents-1.jpg"'
+                alt="hover effect">
+            </div>
+
+            <div class='column' id='rightBlock'>
+                <div id='rightBlockTop'>
+                    <img src="images/aloe-m.jpg" alt="plantBirdsView">
+                </div>
+                <div id='rightBlockBottom'>
+                    <h2 style='color: white;'>Soothing Aloe</h2>
+                    <img src="images/arrow-light.png" alt="rightArrow">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- footer(last row) -->
+    <footer id='lastRow'>
+        <div class='column'>
+            <img src="img\aeonium_jollyclusters.jpg"
+            alt="Aeonium">
+            <p>Aeonium</p>
+        </div>
+        <div class='column'>
+            <img src="img\aloe_congolensis.jpg" alt="Aloe">
+            <p>Aloe</p>
+        </div>
+        <div class='column'>
+            <img src="img\mammilaria_elongata_pink_bloom.jpg" alt="Cactus">
+            <p>Cactus</p>
+        </div>
+        <div class='column'>
+            <img src="img/echeveria_dondo.jpg" alt="Echeveria">
+            <p>Echeveria</p>
+        </div>
+        <div class='column'>
+            <img src="img/sedum_immergrunchen.jpg" alt="Sedum">
+            <p>Sedum</p>
+        </div>
+        <div class='column'>
+            <img src="img/sempervivum_globiferum_white_knight.jpg" alt="Sempervivum">
+            <p>sempervivum</p>
+        </div>
+    </footer>
+    <!-- cookie -->
+    <div id='cookie' class='row'>
+        <img style="margin: 1em" src="images/alert-dark.png" alt="">
+        <p>This site makes use of third-party cookies, by clicking "I accept" you agree to the terms outlined in our <a href="">cookie policy.</a></p>
+        <button onclick="cookieCrumble()">I accept</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
