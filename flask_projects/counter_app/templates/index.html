@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Counter App</title>
+    <style>
+        body {
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body >
+    <h1>Counter</h1>
+    <p>{{session['counter']}} time(s)</p>
+    <div class="flex justify-around">
+        <a href="/" class="btn btn-primary">Click</a>
+        <a href="/add2" class="btn btn-primary">Click 2 times</a>
+        <a href="/reset" class="btn btn-danger">Reset</a>   
+    </div>
+    <form style='margin: 1em' action="">
+        <a href="/custom_number">
+            <input type="text">
+        </a>
+    </form>
+</body>
+</html>
