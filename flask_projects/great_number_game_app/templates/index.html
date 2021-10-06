@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Great Number Game App</title>
+</head>
+<body>
+    <div class='wrapper'>
+        <h1>Welcome to the Great Number Game!</h1>
+        <p>I am thinking of a number between 1 and 100</p>
+        <form action="/guess", method = 'post'>
+            <label for="guess">Take a Guess!!!</label>
+            <input type="text" name="guess" id="guess">
+            <input type="submit">
+            <input type="submit" value="Guess" class="btn btn-warning">
+        </form>
+        {% if 'guess' in session %}
+            {% if session['guess'] == session['num'] %}
+                <div class='box' style='background-color: green;'>
+                    <h1>You got the correct number!</h1>
+                </div>
+                <a href="/reset" class='button'>play again!</a>
+            {% elif session['guess'] > session['num'] %}
+                <div class='box'>
+                    <h1>too high</h1>
+                </div>
+                <a href="/reset" class='button'>play again!</a>
+            {% else %}
+                <div class='box'>
+                    <h1>too low</h1>
+                </div>
+                <a href="/reset" class='button'>play again!</a>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
