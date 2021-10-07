@@ -19,7 +19,7 @@ def add2():
         session["counter"] += 2
     return render_template("index.html")
 
-@app.route('/custom_number')
+@app.route('/custom_number', methods=['POST'])
 def customer_number(number):
     session['counter'] += number
     return render_template("index.html")
