@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Edit</title>
+    <style>
+        .input_bar {
+            width: 23em;
+            height: 3em;
+            margin: .33em;
+            border-width: .15em;
+        }
+    </style>
+</head>
+<body>
+    <form style="display: flex; flex-direction: column; align-items: center;" action="/users/ '{{ id }}' /edit" method="post">
+        <h1>Edit User {{ id }} </h1>
+        <label for="fname">First Name:</label>
+        <input class='input_bar' type="text" name='fname'>
+        <label for="lname">Last Name:</label>
+        <input class='input_bar' type="text" name='lname'>
+        <label for="email">Email:</label>
+        <input class='input_bar' type="text" name='email'>
+        <input class='btn btn-success m-3' type="submit" value="Update">
+        <a style='font-weight:bolder; position:relative; bottom: 3em; left: 10em; color: lightblue' href="/users">Show User</a>
+    </form>
+</body>
+</html>
