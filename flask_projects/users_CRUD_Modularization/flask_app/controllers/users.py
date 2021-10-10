@@ -46,3 +46,10 @@ def destroy(id):
     }
     User.destroy(data)
     return redirect('/users')
+
+@app.route('/register', methods=['POST'])
+def register():
+    if User.validate_user(request.form):
+        return redirect('/dashboard')
+    return redirect('/')
+# r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$'
