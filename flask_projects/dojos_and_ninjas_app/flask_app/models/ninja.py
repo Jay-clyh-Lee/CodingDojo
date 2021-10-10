@@ -1,4 +1,4 @@
-from dojos_and_ninjas_app.config.mysqlconnection import connectToMySQL
+from flask_app.config.mysqlconnection import connectToMySQL
 
 class Ninja:
     def __init__( self , db_data ):
@@ -8,16 +8,14 @@ class Ninja:
         self.age= db_data['age']
         self.created_at = db_data['created_at']
         self.updated_at = db_data['updated_at']
-        # We create a list so that later we can add in all the ninjas that are associated with a restaurant.
-        self.ninjas = []
 
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
 
     @classmethod
     def save( cls , data ):
-        query = "INSERT INTO dojos ( first_name , last_name, age, dojo_id, created_at , updated_at ) VALUES (%(first_name)s, %(last_name)s, %(age)s, %(dojo_id)s, NOW(),NOW());"
-        return connectToMySQL('ninjas').query_db(query,data)
+        query = "INSERT INTO ninja ( first_name , last_name, age, dojo_id, created_at , updated_at ) VALUES (%(first_name)s, %(last_name)s, %(age)s, %(dojo_id)s, NOW(), NOW());"
+        return connectToMySQL('dojos_and_ninjas_schema').query_db(query,data)
 
     @classmethod
     def get_all(cls):

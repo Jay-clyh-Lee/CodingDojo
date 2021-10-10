@@ -1,5 +1,5 @@
-from dojos_and_ninjas_app.config.mysqlconnection import connectToMySQL
-from dojos_and_ninjas_app.models import ninja
+from flask_app.config.mysqlconnection import connectToMySQL
+from .ninja import Ninja
 
 class Dojo:
     def __init__( self , db_data ):
@@ -16,8 +16,8 @@ class Dojo:
 
     @classmethod
     def save( cls , data ):
-        query = "INSERT INTO dojos ( names , created_at , updated_at ) VALUES (%(name)s, NOW(),NOW());"
-        return connectToMySQL('ninjas').query_db(query,data)
+        query = "INSERT INTO dojos ( names , created_at , updated_at ) VALUES (%(name)s, NOW(), NOW());"
+        return connectToMySQL('dojos_and_ninjas_schema').query_db(query,data)
 
     @classmethod
     def get_all(cls):
@@ -30,13 +30,13 @@ class Dojo:
 
     @classmethod
     def get_one(cls,data):
-        query  = "SELECT * FROM dojos WHERE id = %(id)s";
+        query  = "SELECT * FROM dojos WHERE id = %(id)s;"
         result = connectToMySQL('dojos_and_ninjas_schema').query_db(query,data)
         return cls(result[0])
 
     @classmethod
     def update(cls,data):
-        query = "UPDATE dojos SET first_name=%(name)s,last_name=%(last_name)s,age=%(age)s,updated_at=NOW() WHERE id = %(id)s;"
+        query = "UPDATE dojos SET name=%(name)s, updated_at=NOW() WHERE id = %(id)s;"
         return connectToMySQL('dojos_and_ninjas_schema').query_db(query,data)
 
     @classmethod
@@ -44,13 +44,12 @@ class Dojo:
         query  = "DELETE FROM dojos WHERE id = %(id)s;"
         return connectToMySQL('dojos_and_ninjas_schema').query_db(query,data)
 
-    def get_dojo_with_ninjas( cls , data ):
+    @classmethod
+    def get_dojo_with_ninjas(cls, data):
         query = "SELECT * FROM dojos LEFT JOIN ninjas ON ninjas.dojo_id = dojos.id WHERE dojos.id = %(id)s;"
-        results = connectToMySQL('ninjas').query_db( query , data )
-        # results will be a list of topping objects with the burger attached to each row. 
-        dojo = cls( results[0] )
-        for row_from_db in results:
-            # Now we parse the burger data to make instances of burgers and add them into our list.
+        results = connectToMySQL('dojos_and_ninjas_schema').query_db(query,data)
+        dojo = cls(results[0])
+        for row_from_db in dojo:
             ninja_data = {
                 "id" : row_from_db["ninjas.id"],
                 "first_name" : row_from_db["ninjas.first_name"],
@@ -59,5 +58,6 @@ class Dojo:
                 "created_at" : row_from_db["ninjas.created_at"],
                 "updated_at" : row_from_db["ninjas.updated_at"]
             }
-            dojo.burgers.append(ninja.Ninja(ninja_data ) )
+            dojo.ninjas.append(Ninja.save(ninja_data))
         return dojo
+
