@@ -16,7 +16,7 @@ class Dojo:
 
     @classmethod
     def save( cls , data ):
-        query = "INSERT INTO dojos ( names , created_at , updated_at ) VALUES (%(name)s, NOW(), NOW());"
+        query = "INSERT INTO dojos (name, created_at, updated_at) VALUES (%(name)s, NOW(), NOW());"
         return connectToMySQL('dojos_and_ninjas_schema').query_db(query,data)
 
     @classmethod

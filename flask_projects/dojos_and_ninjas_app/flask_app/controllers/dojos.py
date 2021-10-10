@@ -8,7 +8,8 @@ def index():
 
 @app.route('/dojos')
 def dojos():
-    return render_template("index.html", dojos = Dojo.get_all())
+    all_dojos = Dojo.get_all()
+    return render_template("index.html", dojos = all_dojos)
 
 @app.route('/create/dojo', methods=['POST'])
 def create_dojo():
