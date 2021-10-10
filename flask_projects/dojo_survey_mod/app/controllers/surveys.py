@@ -6,13 +6,13 @@ from app import app
 def index():
     return render_template('index.html')
 
-@app.route('/create', methods=['POST'])
+@app.route('/create/survey', methods=['POST'])
 def create():
-    if not Survey.validate_survey(request.form):
-        return redirect('/')
-    Survey.save(request.form)
+    if Survey.validate_survey(request.form):
+        Survey.save(request.form)
+        return redirect('/result')
     return redirect('/')
 
 @app.route('/result')
 def show_result():
-    return render_template('result.html', surveys = Survey.get_all())
+    return render_template('result.html', survey = Survey.get_last())
