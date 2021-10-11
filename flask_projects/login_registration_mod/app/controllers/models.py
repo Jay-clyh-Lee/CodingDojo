@@ -1,10 +1,10 @@
-from flask import render_template,redirect,request
-from app.models.email import Email
+from flask import render_template, request, session, redirect
+from app.models.model_1 import Class_name
 from app import app
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template("index.html")
 
 @app.route('/process',methods=['POST'])
 def process():
@@ -13,9 +13,9 @@ def process():
     Email.save(request.form)
     return redirect('/results')
 
-@app.route('/results')
+@app.route('/dashboard')
 def results():
-    return render_template("results.html",emails=Email.get_all())
+    return render_template("dashboard.html", user = User.get_all())
 
 @app.route('/destroy/<int:id>')
 def destroy_email(id):
