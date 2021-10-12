@@ -12,37 +12,57 @@
         <h1 class="text-primary">Register</h1>
         <div class="form-group">
             <label for="first_name">First Name:</label>
-            <input type="text" name="first_name" class="form-control">
+            <input required type="text" name="first_name" class="form-control">
         </div>
         <div class="form-group">
             <label for="last_name">Last Name:</label>
-            <input type="text" name="last_name" class="form-control">
+            <input required type="text" name="last_name" class="form-control">
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="text" name="email" class="form-control">
+            <input required type="text" name="email" class="form-control">
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" name="password" class="form-control">
+            <input required type="password" name="password" class="form-control">
         </div>
         <div class="form-group">
             <label for="confirm_password">Confirm Password:</label>
-            <input type="password" name="confirm_password" class="form-control">
+            <input required type="password" name="confirm_password" class="form-control">
         </div>
         <input type="submit" value="Register" class="my-3 btn btn-primary text-white">
     </form>
+    <div class="bg-dark text-danger">
+        {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+        {% if messages %}                            <!-- check if there are any messages -->
+            <h2>FLASH!!!!! AHHHHHHHH</h2>
+                {% for message in messages %}            <!-- loop through the messages -->
+                    <p>{{message}}</p>                   <!-- display each message in a paragraph tag -->
+                {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
     <form action="/login" method="post" class="col-5 mx-auto rounded p-5 bg-dark text-white">
         <h1 class="text-success">Login</h1>
         <div class="form-group">
-            <label for="first_name">First Name:</label>
-            <input type="text" name="first_name" class="form-control">
+            <label for="email">Email:</label>
+            <input required type="text" name="email" class="form-control">
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" name="password" class="form-control">
+            <input required type="password" name="password" class="form-control">
         </div>
         <input type="submit" value="Login" class="my-3 btn btn-success text-white">
     </form>
+    <div class="bg-dark text-danger">
+        {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+        {% if messages %}                            <!-- check if there are any messages -->
+            <h2>FLASH!!!!! AHHHHHHHH</h2>
+                {% for message in messages %}            <!-- loop through the messages -->
+                    <p>{{message}}</p>                   <!-- display each message in a paragraph tag -->
+                {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
 </body>
 </html>
