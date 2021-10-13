@@ -51,6 +51,15 @@ class User:
         return cls(result[0])
 
     @classmethod
+    def get_by_id(cls,data):
+        query = "SELECT * FROM users WHERE id = %(id)s;"
+        result = connectToMySQL(cls.db).query_db(query,data)
+        if len(result) < 1:
+            return False
+        return cls(result[0])
+
+
+    @classmethod
     def update(cls, data):
         query = "UPDATE users SET (first_name=%(first_name)s, last_name=%(last_name)s, email=%(email)s, password=%(password)s, updated_at=NOW());"
         return connectToMySQL(cls.db).query_db(query,data)
@@ -60,41 +69,45 @@ class User:
     def validate_registration(data):
         is_valid = True
         # for names
-        if not data.match(data['first_name']):
-            flash("Enter a valid first name.", "error")
+        if not NAME_REGEX.match(data['first_name']):
+            flash("Enter a valid first name.", "register_error")
             is_valid=False
-        if not data.match(data['last_name']):
-            flash("Enter a valid last name.", "error")
+        if not NAME_REGEX.match(data['last_name']):
+            flash("Enter a valid last name.", "register_error")
             is_valid=False
         # for email
         if not EMAIL_REGEX.match(data['email']):
-            flash("Invalid Email!", "error")
+            flash("Invalid Email!", "register_error")
             is_valid=False
         query = "SELECT * FROM users WHERE email = %(email)s;"
         results = connectToMySQL(User.db).query_db(query, data) # reminder: results is returned as a list of dictionaries.
         if len(results) >= 1:
-            flash("Email already taken.", "error")
+            flash("Email already taken.", "register_error")
             is_valid=False
         # for passwords
         if len(data['password']) < 8:
-            flash("Password must be at least 8 characters long", "error")
+            flash("Password must be at least 8 characters long", "register_error")
             is_valid=False
         if data['password'] != data['confirm_password']:
-            flash("Passwords don't match.", "error")
+            flash("Passwords don't match.", "register_error")
             is_valid=False
         return is_valid
     
     @staticmethod
-    def valid_login(data):
+    def validate_login(data):
         is_valid = True
         query = "SELECT * FROM users WHERE email = %(email)s;"
         results = connectToMySQL(User.db).query_db(query, data)
         if len(results) == 0:
-            flash("Email does not exist.")
+            flash("Email does not exist.", "login_error")
+            is_valid=False
+        if len(data['email']) == 0:
+            flash("Email field cannot be empty", "login_error")
+            is_valid=False
+        if len(data['password']) == 0:
+            flash("Password field cannot be empty", "login_error")
             is_valid=False
         # if not EMAIL_REGEX.match(email['email']):
         #     flash("Invalid Email!!!")
         #     is_valid=False
-        query2 = "SELECT * FROM users WHERE password = %(password)s;"
-        es
         return is_valid
