@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="d-flex justify-content-around">
-        <form action="/create/books" method="post" class="col-5 bg-dark p-4 my-5 text-light" >
+        <form action="/create/book" method="post" class="col-5 bg-dark p-4 my-5 text-light" >
             <h2 class="text-center text-warning">New Book</h2>
             <div class="form-group">
                 <label for="title">Title:</label>
@@ -26,7 +26,7 @@
             <h2 class="text-warning">All Books</h2>
             {% for b in books: %}
                 <p>
-                    <a href="/books/{{b.id}}" class="text-warning text-center">{{b.title}}</a>
+                    <a href="/books/{{b.id}}" class="text-white text-center">{{b.title}}</a>
                 </p>
             {% endfor %}
         </div>

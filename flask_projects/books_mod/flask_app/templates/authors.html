@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="d-flex justify-content-around">
-        <form action="/create/authors" method="post" class="col-5 bg-dark p-4 my-5 text-light" >
+        <form action="/create/author" method="post" class="col-5 bg-dark p-4 my-5 text-light" >
             <h2 class="text-center text-primary">New Author</h2>
             <div class="form-group">
                 <label for="name">Name:</label>
@@ -18,11 +18,11 @@
             </div>
             <input type="submit" value="Create" class="text-white btn btn-primary btn-outline-dark">
         </form>
-        <div class="col-5 bg-dark text-light text-center my-5 p-4">
+        <div class="card-body col-5 bg-dark text-light text-center my-5 p-4">
             <h2 class="text-primary">All Authors</h2>
             {% for a in authors: %}
-                <p>
-                    <a href="/authors/{{a.id}}" class="text-warning text-center">{{a.name}}</a>
+                <p class="card-text">
+                    <a href="/authors/{{a.id}}" class="text-white text-center">{{a.name}}</a>
                 </p>
             {% endfor %}
         </div>
