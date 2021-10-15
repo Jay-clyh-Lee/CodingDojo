@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <title>User Dashboard</title>
+</head>
+<body>
+    <div>
+        <h1 class="text-center">Welcome {{logged_in_user.first_name}}!!</h1>
+        <a href="/" class="my-3 btn btn-success text-white">Logout</a>
+    </div>
+    <div class="main">
+        <form action='/messages/create' method="post">
+            <label for="content">Post a message:</label>
+            <textarea name="content" id="" cols="30" rows="10"></textarea>
+            <input type="submit" value="Post">
+        </form>
+    </div>
+
+    <div>
+        {% for message in all_messages %}
+        <div>
+            <h3>POST BY: {{message.user.first_name}}, {{message.user.last_name}}</h3>
+            <h3>POST ON: {{message.created_at.strftime('%m/%d/%Y')}}:</h3>
+            <p>{{ message.content }}</p>
+
+            {% if message.user.id == logged_in_user.id %}
+            <form action="/messages/{{message.id}}/destroy", method="post">
+                <label for="delete">
+                <input type="submit" value="Delete">
+                </label>
+            </form>
+            {% else %}
+            <form action="/messages/{{message.id}}/like", method="post">
+                <label for="delete">
+                <input type="submit" value="Like">
+                </label>
+            </form>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

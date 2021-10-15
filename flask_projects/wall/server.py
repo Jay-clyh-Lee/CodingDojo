@@ -1,5 +1,5 @@
 from flask_app import app
-from flask_app.controllers import #
+from flask_app.controllers import users, messages, comments
 import os
 
 if __name__ == '__main__':

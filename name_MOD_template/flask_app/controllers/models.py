@@ -1,6 +1,7 @@
-from flask import render_template, request, session, redirect
-from app.models.model_1 import Class_name
-from app import app
+from flask import render_template, request, session, redirect, flash
+from flask_app.models.user import User
+from flask_app import app
+from flask_bcrypt import Bcrypt    
 
 @app.route('/')
 def index():
