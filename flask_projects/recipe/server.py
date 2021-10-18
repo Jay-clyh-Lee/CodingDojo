@@ -1,5 +1,5 @@
 from flask_app import app
-from flask_app.controllers import users, recipes
+from flask_app.controllers import users
 import os
 
 if __name__ == '__main__':

@@ -1,12 +1,13 @@
 from ..config.mysqlconnection import connectToMySQL
 from flask import flash
-import re	
-
+from ..models import user
+import re	# the regex module
+# create a regular expression object that we'll use later   
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 NAME_REGEX = re.compile(r'^[a-zA-Z]+[a-zA-Z]$')
 
-class User:
-    db = "recipe_schema"
+class Recipe:
+    db = "wall_schema"
 
     def __init__(self, data):
         self.id = data['id']
@@ -18,7 +19,7 @@ class User:
         self.updated_at = data['updated_at']
         self.user_messages = []
         self.comments = []
-
+        
     @classmethod
     def save(cls, data):
         query = "INSERT INTO users (first_name, last_name, email, password) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s);"
@@ -69,7 +70,7 @@ class User:
 
 
     @staticmethod
-    def validate_registration(data):
+    def validate_recipe(data):
         is_valid = True
         # for names
         if not NAME_REGEX.match(data['first_name']):

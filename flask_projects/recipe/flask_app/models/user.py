@@ -1,12 +1,13 @@
 from ..config.mysqlconnection import connectToMySQL
 from flask import flash
-import re	
-
+from ..models import recipe
+import re	# the regex module
+# create a regular expression object that we'll use later   
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 NAME_REGEX = re.compile(r'^[a-zA-Z]+[a-zA-Z]$')
 
 class User:
-    db = "recipe_schema"
+    db = "wall_schema"
 
     def __init__(self, data):
         self.id = data['id']
@@ -16,9 +17,8 @@ class User:
         self.password = data['password']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
-        self.user_messages = []
-        self.comments = []
-
+        self.recipes = []
+        
     @classmethod
     def save(cls, data):
         query = "INSERT INTO users (first_name, last_name, email, password) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s);"
@@ -26,7 +26,7 @@ class User:
 
     @classmethod
     def get_all(cls):
-        query = "SELECT * FROM users LEFT JOIN messages ON messages.user_id = id LEFT JOIN comments ON comments.user_id = id;"
+        query = "SELECT * FROM users LEFT JOIN recipes ON recipes.user_id = id;"
         results = connectToMySQL(cls.db).query_db(query) 
         users = []
         for u in results:
@@ -55,7 +55,7 @@ class User:
 
     @classmethod
     def get_by_id(cls,data):
-        query = "SELECT * FROM users LEFT JOIN messages ON messages.user_id = users.id LEFT JOIN comments ON comments.user_id = users.id WHERE users.id = %(id)s;"
+        query = "SELECT * FROM users LEFT JOIN recipes ON recipes.user_id = users.id WHERE users.id = %(id)s;"
         result = connectToMySQL(cls.db).query_db(query,data)
         if len(result) < 1:
             return False
