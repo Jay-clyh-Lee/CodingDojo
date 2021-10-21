@@ -1,8 +1,5 @@
 from ..config.mysqlconnection import connectToMySQL
 from flask import flash
-import re	# the regex module
-# create a regular expression object that we'll use later   
-EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
 class Message:
     db = "wall_schema"
@@ -16,7 +13,7 @@ class Message:
         self.user_id = data['user_id']
 
     @classmethod
-    def save(cls, data):
+    def create_comment(cls, data):
         query = "INSERT INTO comments (content, message_id, user_id) VALUES (%(content)s, %(message_id)s, %(user_id)s;"
         return connectToMySQL(cls.db).query_db(query,data)
 

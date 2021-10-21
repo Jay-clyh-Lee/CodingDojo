@@ -11,3 +11,8 @@ flask
 PyMySQL
 flask-bcrypt
 python-dotenv
+
+CMD:
+pipenv shell
+pipenv install flask PyMySQL flask-bcrypt python-dotenv
+pipenv graph

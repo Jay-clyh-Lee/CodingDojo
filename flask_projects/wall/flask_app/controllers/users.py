@@ -11,18 +11,16 @@ def index():
 
 @app.route('/register',methods=['POST'])
 def register():
-    print(request.form)
     if not user.User.validate_registration(request.form):
         return redirect('/')
     pw_hash = bcrypt.generate_password_hash(request.form['password'])                               
-    # because of hashed password, we can't pass on the data directly from request.form to our database
-    data = {
+    user_data = {
         "first_name": request.form['first_name'],
         "last_name": request.form['last_name'],
         "email": request.form['email'],
         "password": pw_hash
     }
-    session['user_id'] = user.User.save(data)
+    session['user_id'] = user.User.create_user(user_data)
     return redirect('/dashboard')
 
 @app.route('/login', methods=['POST'])
@@ -34,10 +32,10 @@ def login():
     } 
     user_with_email = user.User.get_by_email(user_data)
     if not user_with_email:
-        flash("incorrect email/password", "login_error")
+        flash("incorrect email/password", "login")
         return redirect('/')
     if not bcrypt.check_password_hash(user_with_email.password, request.form['password']):
-        flash("incorrect email/password", "login_error")
+        flash("incorrect email/password", "login")
         return redirect('/')
     session['user_id'] = user_with_email.id
     flash("successfully logged in.")
@@ -56,4 +54,5 @@ def dashboard():
     data = {
         "id": session["user_id"]
     }
-    return render_template("dashboard.html", logged_in_user = user.User.get_by_id(data), all_messages = message.Message.get_all())
+    messages_user_liked = message.Message.get_all_liked_messages(data)
+    return render_template("dashboard.html", logged_in_user = user.User.get_by_id(data), all_messages = message.Message.get_all(), messages_user_liked=messages_user_liked)

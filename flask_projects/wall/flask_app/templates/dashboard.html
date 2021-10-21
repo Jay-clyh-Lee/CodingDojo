@@ -1,47 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <title>User Dashboard</title>
 </head>
+
 <body>
-    <div>
-        <h1 class="text-center">Welcome {{logged_in_user.first_name}}!!</h1>
-        <a href="/" class="my-3 btn btn-success text-white">Logout</a>
+    <div class="d-flex mx-auto justify-content-around">
+        <div class="d-flex mx-auto">
+            <h1 class="text-center">Welcome {{logged_in_user.first_name}} {{logged_in_user.last_name}}!!</h1>
+            <a href="/" class="my-3 btn btn-success text-white">Logout</a>
+        </div>
     </div>
+
     <div class="main">
         <form action='/messages/create' method="post">
             <label for="content">Post a message:</label>
-            <textarea name="content" id="" cols="30" rows="10"></textarea>
-            <input type="submit" value="Post">
+            <textarea name="content" id="" cols="30" rows="5"></textarea>
+            <input class="btn btn-warning" type="submit" value="Post">
         </form>
     </div>
 
     <div>
         {% for message in all_messages %}
         <div>
-            <h3>POST BY: {{message.user.first_name}}, {{message.user.last_name}}</h3>
-            <h3>POST ON: {{message.created_at.strftime('%m/%d/%Y')}}:</h3>
+            <h3><a href="/users/{{message.user.id}}">POST BY: {{message.user.first_name}}, {{message.user.last_name}}</a></h3>
+            <h3>POST ON: {{message.created_at.strftime('%m/%d/%Y')}}</h3>
             <p>{{ message.content }}</p>
 
+            {% if message.id in messages_user_liked %}
+                <p>{{message.user.first_name}} {{message.user.last_name}} liked this message!</p>
+                <a href="/message/{{message.id}}/dislike">Dislike!</a>
+            {% else %}
+                <a href="/message/{{message.id}}/like">Like!</a>
+            {% endif %}
+            
+
             {% if message.user.id == logged_in_user.id %}
-            <form action="/messages/{{message.id}}/destroy", method="post">
-                <label for="delete">
+            <form action="/messages/{{message.id}}/destroy" , method="post">
                 <input type="submit" value="Delete">
-                </label>
             </form>
             {% else %}
-            <form action="/messages/{{message.id}}/like", method="post">
-                <label for="delete">
-                <input type="submit" value="Like">
-                </label>
-            </form>
+                <p>{{logged_in_user.first_name}} | {{message.likers.first_name}}</p>
+                {% if logged_in_user not in message.likers %}
+                    <form action="/messages/{{message.id}}/like" , method="post">
+                        <!-- <input type="hidden" name="message_id" value="{{message.id}}"> REMEMBER WHY IS NOT SECURE. f12, change id, alter content" -->
+                        <input type="submit" value="Like">
+                    </form>
+                {% else %}
+                    <form action="/messages/{{message.id}}/unlike" , method="post">
+                        <input type="submit" value="Unlike">
+                    </form>
+                {% endif %}
             {% endif %}
+            <p>List of users who liked this message:  {{message.likers |length}}</p>
         </div>
         {% endfor %}
     </div>
 </body>
+
 </html>
