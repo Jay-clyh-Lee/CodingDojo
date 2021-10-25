@@ -41,7 +41,13 @@
                 <td>{{tree.species}}</td>
                 <td>{{tree.user.first_name}} {{tree.user.last_name}}</td>
                 <td>{{tree.visits}}</td>
-                <td><a href="/trees/{{tree.id}}/show">details</a></td>
+                <td>
+                    {% if logged_in_user.id == tree.user.id or tree.user.id in tree.visitors.user_id %}
+                    <a href="/trees/{{tree.id}}/show">details</a>
+                    {% else %}
+                    <a href="/trees/{{tree.id}}/visit">details</a>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>

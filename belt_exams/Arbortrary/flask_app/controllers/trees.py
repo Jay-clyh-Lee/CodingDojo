@@ -31,6 +31,11 @@ def show_tree(tree_id):
     data = {                                                           
         "id": tree_id,
     }
+    visit_data = {
+        "user_id": session["user_id"],
+        "tree_id": session["tree_id"]
+    }
+
     return render_template("show.html", logged_in_user = user.User.get_by_id(user_data), tree = tree.Tree.get_all_by_id(data))
     # return redirect('/trees/{tree_id}/edit)
 
@@ -77,7 +82,7 @@ def visit_tree(tree_id):
         "tree_id": tree_id
     }
     tree.Tree.visit_tree(visitor_data)
-    return redirect('/dashboard')
+    return redirect('/trees/{tree.id}/show')
 
 @app.route('/trees/<int:tree_id>/dislike', methods=['POST'])
 def dislike_tree(tree_id):
