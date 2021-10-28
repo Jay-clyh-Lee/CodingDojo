@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="d-flex justify-content-around">
+        <form action="/get_user" method="post" class="col-md-5 text-light">
+            <h2 class="text-primary">Get Gamer Stats</h2>
+            <div class="form-group mb-2">
+                <label for="gamer_tag" class="form-label">Gamertag:</label>
+                <input type="text" name="gamer_tag" class="form-control">
+            </div>
+            
+            <div class="form-group mb-2">
+                <label for="system" class="form-label">System:</label>
+                <select name="system" id="">
+                    <option value="XbL">Xbox Live</option>
+                    <option value="PSN">Playstation</option>
+                    <option value="BN">PC</option>
+                </select>
+            </div>
+            <button class="btn btn-primary mt-2">Get Stats</button>
+        </form>
+        <table class="col-md-4">
+            <thead>
+                <th>Gamer Tag</th>
+                <th>KDA Ratio</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{session.gamer_info}}</td>
+                    <td>{{session.kda_ratio}}</td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+</body>
+</html>

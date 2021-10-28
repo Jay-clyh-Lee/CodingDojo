@@ -7,57 +7,19 @@
     <!-- jquery -->
     link
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
     <!-- <script src="jquery-3.5.1.min.js"></script>  #requires download -->
     <title>Document</title>
 </head>
 <body>
-    <script>
-        $(document).ready(function() {
-            $('event-form-ajax').submit(function(e) {
-                e.preventDefault();
-                var response = $.post('/events/create/ajax', $('#event-form-ajax').serialize());
-                console.log(`RESPONSE HERE: ${response}`);
-                respnose.done(function(data) {
-                    console.log(`DATA HERE: ${data}`);
-                    $('#all-events').prepend(data)
-                })
-            })
-        });
-    </script>
 
-    <div class="container">
-        <h1>All Events</h1>
-        <ul id="all-events">
-            {% for event in all_events %}
-            <li>{{event.title}}</li>
-            {% endfor %}
-        </ul>
-        <h1>Add an event the normal way</h1>
-        <form id="event-form" action="/events/create" method="POST" class="create-event">
-            <label for="title"></label>
-            <input type="text" name="title" id="title">
-            <input type="submit" value="Add Event">
-        </form>
-
-        <h1>Add event the ajax way</h1>
-        <form id="event-form" action="/events/create/ajax" method="POST" class="create-event">
-            <label for="title"></label>
-            <input type="text" name="title" id="title">
-            <input type="submit" value="Add Event">
-            <a href="/reset">Delete All</a>
-        </form>        
-
-    </div>
-
-    <p id = "likes"></p>
-    <p id = "dislikes"></p>
-    <button onclick = "like()">Like</button>
-    <button onclick = "dislike()">Dislike</button>
-    <button onclick = "clear_likes()">clear</button>
     <button onclick="getCoderData()">click</button>
-    <div id='getData'>user data:</div>
-    <script src="script.js"></script>
-    <!-- <script type="text/javascript" scr="{{ url_for('static', filename='js/ajax.js') }}"></script> -->
+
+    <div id='getData'>user data:
+        <script>
+            $("getData").load("getCoderData()");
+        </script>
+    </div>
+    <!-- <script src="script.js"></script> -->
+    <script type="text/javascript" scr="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
