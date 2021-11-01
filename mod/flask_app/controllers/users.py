@@ -1,13 +1,34 @@
-from flask import render_template, request, session, redirect, flash
+from flask import render_template, request, session, redirect, flash, jsonify
 from flask_app.models import user, band
 from flask_app import app
-from flask_bcrypt import Bcrypt  
+from flask_bcrypt import Bcrypt
+import requests, os
 
 bcrypt = Bcrypt(app)
 
 @app.route('/')
 def index():
     return render_template("index.html")
+
+@app.route('/get_user')
+def get_user():
+    gamer_tag = request.form['gamer_tag']
+    if " " in gamer_tag:
+        gamer_tag = gamer_tag.replace(" ", "%20")
+    system_type = request.form['system']
+    url = f"/{system_type}/{gamer_tag}"
+    headers = {"TRN-Api-Key": os.environ.get("API_KEY")}
+    response = requests.get(url, headers=headers)
+
+    session["gamer_info"] = response.json()["data"]
+    session["kda_ratio"] = response.json()["data"]["kda"]
+    # user_data = {
+    #     "id" : session["id"]
+    #     "gamer_info" : response.json()["data"]
+    #     "kda_ratio" : response.json()["data"]["kda"]
+    # }
+    return redirect('/')
+    #return render_template('dashboard.html', logged_in_user = this_user)
 
 @app.route('/register',methods=['POST'])
 def register():

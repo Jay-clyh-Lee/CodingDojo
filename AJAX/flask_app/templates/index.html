@@ -5,21 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- jquery -->
-    link
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
     <!-- <script src="jquery-3.5.1.min.js"></script>  #requires download -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
     <title>Document</title>
 </head>
 <body>
-
     <button onclick="getCoderData()">click</button>
-
-    <div id='getData'>user data:
-        <script>
-            $("getData").load("getCoderData()");
-        </script>
-    </div>
     <!-- <script src="script.js"></script> -->
-    <script type="text/javascript" scr="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
