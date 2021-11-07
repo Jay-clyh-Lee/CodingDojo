@@ -12,20 +12,26 @@ class BankAccount:
         return self
     
     def withdraw(self, amount):
-        self.balance -= amount
+        if self.balance > amount:
+            self.balance -= amount
+        else:
+            print(f"Not enough funds in account. Current balance: {self.balance}")
         return self
 
     def display_account_info(self): 
         print(f'The account balance is: {self.balance}')
+        return self
 
     def yield_interest(self):
-        self.balance *= (1 + self.interest_rate)
+        if self.balance > 0:
+            self.balance *= (1 + self.interest_rate)
+            print(f"Not enough funds in account. Current balance: {self.balance}")
         return self
 
     @classmethod
     def print_all(cls):
         for account in cls.accounts:
-            print(account)
+            account.display_account_info()
 
 Michael = BankAccount(.05).deposit(1000).deposit(1000).deposit(1000).withdraw(500).yield_interest().display_account_info()
 Gabrial = BankAccount(.05).deposit(1000).deposit(1000).withdraw(300).withdraw(300).withdraw(300).withdraw(300).yield_interest().display_account_info()
