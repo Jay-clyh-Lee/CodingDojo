@@ -1,18 +1,21 @@
 class MathDojo:
 
-    def __init__(self) -> None:
+    def __init__(self):
         self.result = 0
 
-    def add(self, num, *nums):
-        self.result += num
-        for number in list(nums):
-            self.result += number
+    def add(self, *nums):
+        for num in nums:
+            self.result += num
         return self
 
-    def subtract(self, num, *nums):
-        self.result -= num
-        for number in list(nums):
-            self.result -= number
+    def subtract(self, *nums):
+        for num in nums:
+            self.result -= num
         return self
 
-math1 = MathDojo.add(1,2,3)
+    def display(self):
+        print(self.result)
+
+math1 = MathDojo()
+math1.add(1,2,3,213,32131,44123).subtract(1,231,321,21,3).display()
+
