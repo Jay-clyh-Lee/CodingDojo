@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- <style>
+        body {
+            width: 1080px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .box {
+            background-color: lightblue;
+            width: 200px;
+            height: 200px;
+            margin: 10px;
+            border-style: solid;
+            border-color: black;
+            border-width: 3px;
+        }
+    </style> -->
+    <title>Playground</title>
+</head>
+<body>
+    <h1 style="text-align: center; background-color: {{color2}}; color: {{color1}}; margin-bottom: 2em;">::::: CHECKERBOARD :::::</h1>
+    <main>
+        <table>
+            <tbody>
+                {% for i in range(x) %}
+                    <tr>
+                        {% for j in range(y) %}
+                            {% if (i+j) % 2 == 0 %}
+                                <td class = 'box' style="background-color: {{color1}}"></td>
+                            {% else %}
+                                <td class = 'box' style="background-color: {{color2}}"></td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+
+    </main>
+</body>
+</html>

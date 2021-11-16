@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 1080px;
+    margin: auto;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.box {
+    background-color: lightblue;
+    width: 50px;
+    height: 50px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+}
+
