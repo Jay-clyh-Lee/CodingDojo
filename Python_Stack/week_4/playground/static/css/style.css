@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 1080px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    background-color: lightblue;
+    width: 200px;
+    height: 200px;
+    margin: 10px;
+    border-style: solid;
+    border-color: black;
+    border-width: 3px;
+}
