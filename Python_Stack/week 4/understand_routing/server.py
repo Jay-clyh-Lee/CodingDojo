@@ -4,25 +4,21 @@ app = Flask(__name__)
 @app.route('/')
 def hello():
     msg = "hello world!"
-    print(msg)
     return msg
 
 @app.route('/dojo')
 def dojo():
     msg = "dojo!"
-    print(msg)
     return msg
 
 @app.route('/say/<string:name>')
 def say(name):
     msg = f"Hi {name}"
-    print(msg)
     return msg
 
 @app.route('/repeat/<int:num>/<string:word>')
 def repeat(num, word):
     msg = f"{word} " * num
-    print(msg)
     return msg
 
 @app.errorhandler(404)
