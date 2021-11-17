@@ -9,11 +9,9 @@ def index():
         session["counter"] = 0
     if "visits" not in session:
         session["visits"] = 0
-    counter = session["counter"]
-    counter += 1
-    visits = session["visits"]
-    visits += 1
-    return render_template('index.html', counter = counter, visits = visits)
+    session["counter"] += 1
+    session["visits"] += 1
+    return render_template('index.html', counter = session["counter"], visits = session["visits"])
 
 @app.route('/add')
 def add1():
@@ -28,13 +26,17 @@ def add_multiple():
         return redirect('/')
     print(f'the request form is: {request.form}')
     print(f'the request.form.to_dict() is: {request.form.to_dict()}')
-    session["counter"] += int(request.form["custom_number"])-1
-    return redirect('/')
+    session["counter"] += int(request.form["custom_number"])
+    return redirect('/home')
+
+@app.route('/home')
+def home():
+    return render_template('index.html',counter = session["counter"], visits = session["visits"])
 
 @app.route('/destroy_session')
 def destroy_session():
     session.clear()
-    return redirect('/')
+    return render_template('index.html', counter = 0, visits = 0)
 
 
 if __name__ == "__main__":
