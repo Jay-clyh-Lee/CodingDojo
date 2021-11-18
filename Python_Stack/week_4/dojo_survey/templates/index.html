@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+    </style>
+    <title>Dojo Survey</title>
+</head>
+<body class="d-flex justify-content-center align-items-center m-auto text-white form-body">
+    <form action="/process" method="post" class="col-3 rounded p-3 mx-auto bg-dark">
+        <div class="form-group">
+            <label for="name">Your name</label>
+            <input type="text" name="name" id="name" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="location">Dojo Location: </label>
+            <select name="location" id="location" class="form-control">
+                {% for location in locations %}
+                    <option value="{{location}}">{{location}}</option >
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="language">Dojo language: </label>
+            <select name="language" id="language" class="form-control">
+                {% for language in languages %}
+                    <option value="{{language}}">{{language}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="comment">Comment (optional):</label>
+            <textarea name="comment" id="" cols="30" rows="10" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="sex">Gender:</label>
+            <select name="sex" id="sex" class="form-control">
+                <option value="male" class="btn">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+        <div class="form-group mt-1">
+            <text>Career Path:</text>
+            <div>
+                <input type="radio" id="ds" name="path" value="data_science">
+                <label for="ds">data science</label>
+            </div>
+            <div>
+                <input type="radio" id="front_dev" name="path" value="front_end_developer">
+                <label for="ds">front end developer</label>
+            </div>
+            <div>
+                <input type="radio" id="back_dev" name="path" value="back_end_developer">
+                <label for="ds">back end developer</label>
+            </div>
+        </div>
+        <div class="form-group mt-1">
+            <text>Food You Like:</text><br>
+            <input type="checkbox" id="food1" name="pizza" value="pizza">
+            <label for="food1">pizza</label><br>
+            <input type="checkbox" id="food2" name="burger" value="burger">
+            <label for="food2">burger</label><br>
+            <input type="checkbox" id="food3" name="noodles" value="noodles">
+            <label for="food3">noodles</label><br>
+            <input type="checkbox" id="food4" name="BBQ" value="BBQ">
+            <label for="food1">BBQ</label><br>
+        </div>
+        <input type="submit" value="submit" class="btn btn-success mt-5">
+    </form>
+</body>
+</html>
