@@ -70,9 +70,10 @@
     </main>
     <div>
         <strong class="text-black">activities</strong>
+        <!-- NINJA BONUS: add emojos after each line (smily for winning, sad face for losing) -->
         <div id="activities">
             {% if building == "nowhere" %}
-                <p style="background: {{color}}">Welcome come to Ninja gold game!</p>
+                <p style="background:{{color}}">Welcome come to Ninja gold game!</p>  
             {% else %}
                 <p style="background: {{color}}">Earned {{gain}} gold from the
                 {{building}}! on ({{datetime}})</p>
@@ -83,7 +84,7 @@
         </div>
     </div>
     <footer>
-        <a href="/quit">Quit this game!</a>
+        <a href="/quit" class="btn btn-success mt-3">Quit this game!</a>
     </footer>
 </body>
 </html>
