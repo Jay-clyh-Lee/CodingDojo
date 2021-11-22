@@ -36,7 +36,8 @@
         {% if my_number == session["user_number"] %}
             <div class="box bg-success" id="win">
                 <h1>Correct!</h1>
-                <h1>{{my_number}} was the number!</h1>      
+                <h1>{{my_number}} was the number!</h1>
+                <h3>number of tries: {{tries}}</h3>
             </div>
             <a href="/reset" class="btn btn-warning rounded">Play again!</a>
         {% elif session["my_number"] < session["user_number"] %}

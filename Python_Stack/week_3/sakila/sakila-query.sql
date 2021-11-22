@@ -33,6 +33,11 @@ WHERE store.store_id = 1 AND city.city_id IN (1, 42, 312, 459);
 
 
 #5. What query would you run to get all the films with a "rating = G" and "special feature = behind the scenes", joined by actor_id = 15? Your query should return the film title, description, release year, rating, and special feature. Hint: You may use LIKE function in getting the 'behind the scenes' part.
+SELECT title, description, release_year, rating, special_features FROM film
+LEFT JOIN film_actor ON film_actor.film_id = film.film_id
+LEFT JOIN actor ON actor.actor_id = film_actor.actor_id
+WHERE rating = "G" AND special_features LIKE "%behind the scenes%";
+
 
 #6. What query would you run to get all the actors that joined in the film_id = 369? Your query should return the film_id, title, actor_id, and actor_name.
 
