@@ -40,7 +40,33 @@ WHERE rating = "G" AND special_features LIKE "%behind the scenes%";
 
 
 #6. What query would you run to get all the actors that joined in the film_id = 369? Your query should return the film_id, title, actor_id, and actor_name.
+SELECT film.film_id, title, actor.actor_id, CONCAT(CONCAT(SUBSTRING(actor.first_name, 1,1), LOWER(SUBSTRING(actor.first_name, 2, 100))), " ", CONCAT(SUBSTRING(actor.last_name, 1,1), LOWER(SUBSTRING(actor.last_name, 2, 100)))) AS full_name FROM film
+LEFT JOIN film_actor ON film_actor.film_id = film.film_id
+LEFT JOIN actor ON actor.actor_id = film_actor.actor_id
+WHERE film.film_id = 369;
+
 
 #7. What query would you run to get all drama films with a rental rate of 2.99? Your query should return film title, description, release year, rating, special features, and genre (category).
+SELECT title, description, release_year, rating, special_features, category.name AS genre FROM film
+LEFT JOIN film_category ON film_category.film_id = film.film_id
+LEFT JOIN category ON category.category_id = film_category.category_id
+LEFT JOIN inventory ON inventory.film_id = film.film_id
+LEFT JOIN rental ON rental.inventory_id = inventory.inventory_id
+LEFT JOIN payment ON payment.rental_id = rental.rental_id
+WHERE amount = 2.99 AND category.name = "Drama";
+
+
+-- SELECT DISTINCT TABLE_NAME 
+--     FROM INFORMATION_SCHEMA.COLUMNS
+--     WHERE COLUMN_NAME IN ('film_id','rental_id')
+--         AND TABLE_SCHEMA='sakila';
+
 
 #8. What query would you run to get all the action films which are joined by SANDRA KILMER? Your query should return film title, description, release year, rating, special features, genre (category), and actor's first name and last name.
+SELECT title, description, release_year, rating, special_features, category.name AS genre, CONCAT(CONCAT(SUBSTRING(actor.first_name, 1,1), LOWER(SUBSTRING(actor.first_name, 2, 100))), " ", CONCAT(SUBSTRING(actor.last_name, 1,1), LOWER(SUBSTRING(actor.last_name, 2, 100)))) AS full_name FROM film
+LEFT JOIN film_category ON film_category.film_id = film.film_id
+LEFT JOIN category ON category.category_id = film_category.category_id
+LEFT JOIN film_actor ON film_actor.film_id = film.film_id
+LEFT JOIN actor ON actor.actor_id = film_actor.actor_id
+WHERE CONCAT(actor.first_name, " ", actor.last_name) = "SANDRA KILMER" AND category.name = "Action";
+
