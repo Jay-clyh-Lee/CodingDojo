@@ -17,6 +17,7 @@ def index():
 @app.route('/guess', methods=['POST'])
 def guess():
     session["user_number"] = int(request.form['guess'])
+    session["tries"] += 1
     # print(f'OMWQEWLKJS:LFJLFJGGJ ++++++++++++++++++++++++++++++ {type(request.form["guess"])}')
     return redirect('/')
 
