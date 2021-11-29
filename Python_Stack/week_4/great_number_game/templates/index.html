@@ -32,7 +32,7 @@
         <input type="submit" value="submit" class="btn btn-primary mt-2">
     </form>
 
-    {% if 'user_number' in session %}            
+    {% if ('user_number' in session) and (tries < 5) %}            
         {% if my_number == session["user_number"] %}
             <div class="box bg-success" id="win">
                 <h1>Correct!</h1>
@@ -41,14 +41,20 @@
             </div>
             <a href="/reset" class="btn btn-warning rounded">Play again!</a>
         {% elif session["my_number"] < session["user_number"] %}
+            {% session["tries"] += 1 %}
             <div class="box bg-danger" id="too_big">
                 <h1>Too Big!</h1>
             </div>
         {% else %}
+            {% session["tries"] += 1 %}
             <div class="box bg-danger" id="too_small">
                 <h1>Too Small!</h1>
             </div>
         {% endif %}
+    {% else %}
+        <div class="box bg-secondary" id="loss">
+            <h1>You Lost!</h1>
+        </div>
     {% endif %}
 </body>
 </html>
