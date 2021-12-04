@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read (One)</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        a {
+            font-weight: bold
+        }
+    </style>
+</head>
+<body class='m-auto col-5'>
+    <header class="d-flex justify-content-between">
+        <h1>User {{user.id}}</h1>
+        <a href="/users" class="ml-1 my-3">Home</a>
+    </header>
+    <div class="border my-3">
+        <h4>Full Name: {{user.first_name}} {{user.last_name}}</h4>
+        <h4>Email: {{user.email}}</h4>
+        <h4>Created On: {{user.created_at}}</h4>
+        <h4>Last Updated On: {{user.updated_at}}</h4>
+    </div>
+    <div>
+        <a href="/users/{{user.id}}/edit" class="ml-1 my-3">Edit &nbsp</a> |
+        <a href="/users/{{user.id}}/delete" class="ml-1 my-3">Delete</a>
+    </div>
+    
+</body> 
+</html>

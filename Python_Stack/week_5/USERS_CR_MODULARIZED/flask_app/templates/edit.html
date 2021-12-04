@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .inp{
+            border:solid 2px gray;    
+            outline:solid 2px silver;
+        }
+        .inp:focus{
+            outline:solid 2px red;
+        }
+        a {
+            font-weight: bold
+        }
+    </style>
+</head>
+<body class="m-auto col-5">
+    <header class="d-flex justify-content-between">
+        <h1>Edit User {{user.id}}</h1>
+        <a href="/users" class="ml-1 my-3">Home</a>
+    </header>
+    <form action="/users/{{user.id}}/update", method="post", class="form-group d-flex flex-column text-black col-5">
+        <label for="first_name">First Name:</label>
+        <input type="text", name="first_name", class="form-group inp" value="{{user.first_name}}">
+        <label for="last_name">Last Name:</label>
+        <input type="text", name="last_name", class="form-group inp" value="{{user.last_name}}">
+        <label for="email">Email:</label>
+        <input type="text", name="email", class="form-group inp" value="{{user.email}}">
+        <input type="submit" value="Update", class="col-3 btn btn-primary">
+    </form>
+    <a href="/users/{{user.id}}/show">Show User</a>
+</body> 
+</html>

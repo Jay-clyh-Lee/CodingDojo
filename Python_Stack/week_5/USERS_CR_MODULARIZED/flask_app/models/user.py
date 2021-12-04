@@ -17,7 +17,7 @@ class User:
     @classmethod
     def save(cls, data):
         query = "INSERT INTO users (first_name, last_name, email) VALUES (%(first_name)s, %(last_name)s, %(email)s);"
-        return connectToMySQL(cls.db).query_db(query,data)
+        return connectToMySQL(cls.db).query_db(query, data)
 
     @classmethod
     def get_by_id(cls, data):
@@ -28,12 +28,17 @@ class User:
         return cls(results[0])
 
     @classmethod
-    def get_by_email(cls,data):
+    def get_by_email(cls, data):
         query = "SELECT * FROM users WHERE email = %(email)s;"
-        results = connectToMySQL(cls.db).query_db(query,data)
+        results = connectToMySQL(cls.db).query_db(query, data)
         if len(results) == 0:
             return False
         return cls(results[0])
+
+    @classmethod
+    def update(cls, data):
+        query = "UPDATE users SET first_name = %(first_name)s, last_name = %(last_name)s ,email = %(email)s WHERE id = %(id)s;"
+        return connectToMySQL(cls.db).query_db(query, data)
 
     @classmethod
     def get_all(cls):
@@ -43,5 +48,11 @@ class User:
         for user in results:
             users.append(cls(user))
         return users
+
+    @classmethod
+    def destory(cls, data):
+        query = "DELETE FROM users WHERE id = %(id)s;"
+        return connectToMySQL(cls.db).query_db(query, data)
+
 
 
