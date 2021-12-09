@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <title>Recipes</title>
+    <style>
+        a {
+            font-weight: bold;
+            text-decoration: none;
+            background-color: none;
+        }
+        a:hover {
+            color: orange;
+        }
+        a:visited {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <header class="d-flex justify-content-between align-items-center">
+        <h1>Welcome {{logged_in_user.first_name}}!</h1>
+        <div>
+            <a href="/Create">Create</a>
+            <a href="/Logout">Logout</a>
+        </div>
+    </header>
+    <main>
+        <h1>{{recipe.name}}</h1>
+        <div>
+            <p>Description:</p>
+            <p>Under 30 minutes:</p>
+            <p>Instructions:</p>
+            <p>Date Made:</p>
+        </div>
+    </main>
+</body>
+</html>
+
+
