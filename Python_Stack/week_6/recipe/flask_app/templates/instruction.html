@@ -43,14 +43,14 @@
             <tr>
                 <th>Under 30 minutes:</th>
                 <td>{{recipe.duration}}</td>
-            </tr>Date Made:
+            </tr>
             <tr>
                 <th>Instructions:</th>
                 <td>{{recipe.instruction}}</td>
             </tr>
             <tr>
-                <th>Date Mode:</th>
-                <td>{{recipe.created_at}}</td>
+                <th>Date Made:</th>
+                <td>{{recipe.date_made.strftime('%Y-%m-%d')}}</td>
             </tr>
         </table>
         <div>
