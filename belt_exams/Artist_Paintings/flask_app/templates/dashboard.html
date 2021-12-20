@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <title>Dashboard</title>
+    <style>
+        a {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column mx-auto">
+    <header class="d-flex justify-content-between">
+        <h2 class="text-center">Welcome {{logged_in_user.first_name}} {{logged_in_user.last_name}}!</h2>
+        <a href="/paintings/new" class="btn btn-success text-white">Add Painting</a>
+        <a href="/logout" class="btn btn-success text-white">Logout</a>
+    </header>
+    <main class="d-flex">
+        <div id="left_panel" class="mr-5">
+            <h4>Paintings</h4>
+            <div class="d-flex flex-column justify-content-between mt-10 border border-2 border-dark">
+                {% for painting in all_paintings %}
+                    <div style="overflow:auto" class="d-flex  justify-content-between p-2">
+                        <p>
+                            <a href="/paintings/show/{{painting.id}}">{{painting.name}}</a> by {{painting.user.first_name}} {{painting.user.last_name}}
+                        {% if logged_in_user.id == painting.user.id %}
+                            <a href="/paintings/edit/{{painting.id}}">Edit</a> | 
+                            <a href="/paintings/delete/{{painting.id}}">Delete</a>
+                        {% endif %}
+                        </p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="right_panel" class="mx-5">
+            <h4>Your Purchased Paintings</h4>
+            <div class="d-flex flex-column justify-content-between mt-10 border border-2 border-dark">
+                {% for painting in all_paintings_detailed %}
+                    <div style="overflow:auto" class="d-flex  justify-content-between p-2">
+                        {% for buyers in painting.buyers %}
+                            {% if logged_in_user.id == buyers["id"] %}
+                                <p>
+                                    <a href="/paintings/show/{{painting.id}}">{{painting.name}}</a> by {{painting.user.first_name}} {{painting.user.last_name}}
+                                </p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+</body>
+</html>
+
+
