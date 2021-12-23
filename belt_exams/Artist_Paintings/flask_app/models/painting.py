@@ -1,6 +1,6 @@
 from ..config.mysqlconnection import connectToMySQL
 from flask import flash
-from ..models import user
+from flask_app.models import user
 
 class Painting:
     db = "paintings"
@@ -11,6 +11,7 @@ class Painting:
         self.description = data['description']
         self.price = data['price']
         self.quantity = data['quantity']
+        self.sold = data['sold']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         self.user_id = data['user_id']
@@ -70,10 +71,11 @@ class Painting:
 
     @classmethod
     def get_all_detailed(cls):
-        query = "SELECT DISTINCT * FROM paintings LEFT JOIN users ON users.id = paintings.user_id LEFT JOIN purchases ON paintings.id = purchases.painting_id LEFT JOIN users AS buyers ON buyers.id = purchases.user_id;"
+        query = "SELECT * FROM paintings LEFT JOIN users ON users.id = paintings.user_id LEFT JOIN purchases ON paintings.id = purchases.painting_id LEFT JOIN users AS buyers ON buyers.id = purchases.user_id;"
         results = connectToMySQL(cls.db).query_db(query) 
         all_paintings = []
         for row in results:
+            this_painting = cls(row)
             buyer_data = { 
                 'id': row['buyers.id'],
                 'first_name': row['buyers.first_name'],
@@ -83,7 +85,6 @@ class Painting:
                 'created_at': row['buyers.created_at'],
                 'updated_at': row['buyers.updated_at'],
             }
-            this_painting = cls(row)
             user_data = {
                 'id': row['users.id'],
                 'first_name': row['first_name'],
@@ -95,27 +96,29 @@ class Painting:
             }
             this_user = user.User(user_data)
             this_painting.user = this_user
-            if row['buyers.id'] is not None:
-                this_buyer = user.User(buyer_data)
-                this_painting.buyers.append(this_buyer)
+            this_buyer = user.User(buyer_data)
+            this_painting.buyers.append(this_buyer)
+            # if row['buyers.id'] is not None:
+                
             all_paintings.append(this_painting)
         return all_paintings
 
     @classmethod
     def get_by_id(cls, data):
         query = "SELECT DISTINCT * FROM paintings LEFT JOIN users ON users.id = paintings.user_id LEFT JOIN purchases ON paintings.id = purchases.painting_id LEFT JOIN users AS buyers ON buyers.id = purchases.user_id WHERE paintings.id = %(id)s;"
-        results = connectToMySQL(cls.db).query_db(query, data)
+        results = connectToMySQL(cls.db).query_db(query, data)    
+        this_painting = cls(results[0])
+        artist_data = { 
+            'id': results[0]['users.id'],
+            'first_name': results[0]['first_name'],
+            'last_name': results[0]['last_name'],
+            'email': results[0]['email'],
+            'password': results[0]['password'],
+            'created_at': results[0]['users.created_at'],
+            'updated_at': results[0]['users.updated_at'],
+        }
+        this_painting.user = user.User(artist_data)
         for row in results:
-            this_painting = cls(row)
-            artist_data = { 
-                'id': row['users.id'],
-                'first_name': row['first_name'],
-                'last_name': row['last_name'],
-                'email': row['email'],  
-                'password': row['password'],
-                'created_at': row['users.created_at'],
-                'updated_at': row['users.updated_at'],
-            }
             buyer_data = { 
                 'id': row['buyers.id'],
                 'first_name': row['buyers.first_name'],
@@ -125,7 +128,6 @@ class Painting:
                 'created_at': row['buyers.created_at'],
                 'updated_at': row['buyers.updated_at'],
             }
-            this_painting.user = user.User(artist_data)
             this_painting.buyers.append(buyer_data)
         return this_painting
 
@@ -155,10 +157,10 @@ class Painting:
         if len(data["description"]) < 10:
             flash("Descriptoin should be at least 10 characters long.", "painting")
             is_valid=False
-        if float(data["price"]) <= 0:
+        if len(data["price"]) == 0 or float(data["price"]) <= 0:
             flash("Price should be greater than 0.", "painting")
             is_valid=False
-        if int(data["quantity"]) < 1:
+        if len(data["quantity"]) == 0 or int(data["quantity"]) < 1:
             flash("Quantity should be greater than 0.", "painting")
             is_valid=False
         return is_valid

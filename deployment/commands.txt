@@ -6,19 +6,20 @@ User=ubuntu
 Group=www-data
 WorkingDirectory=/home/ubuntu/Artist_Paintings
 Environment="PATH=/home/ubuntu/Artist_Paintings/venv/bin"
-ExecStart=/home/ubuntu/Artist_Paintings/venv/bin/gunicorn --workers 3 --bind unix:flask_app.sock -m 007 wsgi:application
+ExecStart=/home/ubuntu/Artist_Paintings/venv/bin/gunicorn --workers 3 --bind unix:Artist_Paintings.sock -m 007 wsgi:application
 [Install]
 WantedBy=multi-user.target
 
 
+sudo vim /etc/nginx/sites-available/Artist_Paintings
+
 server {
     listen 80;
-    server_name 18.118.218.82;
+    server_name 54.241.156.1;
     location / {
         include proxy_params;
-        proxy_pass http://unix:/home/ubuntu/Artist_Paintings/flask_app.sock;
+        proxy_pass http://unix:/home/ubuntu/Artist_Paintings/Artist_Paintings.sock;
     }
 }
 
-
-sudo ln -s /etc/nginx/sites-available/flask_app /etc/nginx/sites-enabled
+sudo ln -s /etc/nginx/sites-available/Artist_Paintings /etc/nginx/sites-enabled

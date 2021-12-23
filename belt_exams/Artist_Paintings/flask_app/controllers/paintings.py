@@ -1,7 +1,9 @@
-from flask import render_template, request, session, redirect
+from flask import render_template, request, session, redirect, flash
 from flask_app.models import user, painting
 from flask_app import app
 from ..config.mysqlconnection import connectToMySQL
+
+db = "paintings"
 
 @app.route('/paintings/create', methods=['POST'])
 def create():
@@ -73,7 +75,7 @@ def buy_painting(painting_id):
         "user_id": session['user_id'],
         "painting_id": painting_id
     }
-    query = f"UPDATE paintings SET quantity=quantity-1 WHERE id = {painting_id};"
-    connectToMySQL("paintings").query_db(query)
+    query = f"UPDATE paintings SET quantity=quantity-1, sold=sold+1 WHERE id = {painting_id};"
+    connectToMySQL(db).query_db(query)
     painting.Painting.buy_painting(buyer_data)
     return redirect(f'/paintings/show/{painting_id}')

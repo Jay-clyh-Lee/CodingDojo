@@ -35,7 +35,7 @@
         <p>Price:</p>
         <text>{{painting.price}}</text>
         <p>Number Purchased:</p>
-        <span class="mb-3">{{painting.buyers|length}}</span>
+        <span class="mb-3">{{painting.sold}}</span>
         {% if painting.quantity == 0 %}
             <p>Sold Out</p>
         {% elif logged_in_user.id == painting.user_id %}
