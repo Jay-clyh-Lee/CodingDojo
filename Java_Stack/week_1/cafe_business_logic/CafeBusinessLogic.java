@@ -1,11 +1,6 @@
-package businesscafe;
+package cafe_business_logic;
 
-public class businesscafe {
-    
-}
-package cafe_java;
-
-public class CafeJava {
+public class CafeBusinessLogic {
     public static void main(String[] args) {
         // APP VARIABLES
         // Lines of text that will appear in the app. 
