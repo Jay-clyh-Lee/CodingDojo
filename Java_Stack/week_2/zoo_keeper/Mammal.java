@@ -1,6 +1,6 @@
 public class Mammal {
     
-    public int energyLevel = 100;
+    protected int energyLevel = 100;
 
     public int displayEnergy() {
         // getter
@@ -8,5 +8,4 @@ public class Mammal {
         return energyLevel;
     }
 
-    
 }
