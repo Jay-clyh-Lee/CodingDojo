@@ -1,6 +1,6 @@
 public class GorillaTest {
     public static void main(String[] args){
-        Gorilla bigGeorge = new Gorilla();
+        Gorilla bigGeorge = new Gorilla(100);
         bigGeorge.displayEnergy();
         bigGeorge.throwSomething();
         bigGeorge.climb();

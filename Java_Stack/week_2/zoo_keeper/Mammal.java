@@ -8,4 +8,7 @@ public class Mammal {
         return energyLevel;
     }
 
+    public Mammal(int energyLevel) {
+		this.energyLevel = energyLevel;
+	}
 }

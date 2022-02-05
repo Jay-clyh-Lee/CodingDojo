@@ -1,6 +1,9 @@
 public class Bat extends Mammal {
     
-    public int energyLevel = 300; //This does not work if overload Mammal class.
+   //This does not work if overload Mammal class.
+    public Bat(int energyLevel) {
+        super(energyLevel);
+    }
 
     public void fly() {
         System.out.println("The bat is flying around!");
