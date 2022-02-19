@@ -1,0 +1,26 @@
+<body>
+    <main id="container" class="d-flex flex-column align-items-center justify-content-center">
+        <div id="form">
+            <h1><c:out value="${dojo.name}"></c:out></h1>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Age</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <c:forEach var="ninja" items="${dojo.ninjas}">
+                            <td><c:out value="${ninja.firstName}"/></td>
+                            <td><c:out value="${ninja.lastName}"/></td>
+                            <td><c:out value="${ninja.age}"/></td>
+                        </c:forEach>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

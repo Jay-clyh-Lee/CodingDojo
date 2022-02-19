@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,45 +20,51 @@ import com.save_travels.demo.services.ExpenseService;
 public class ExpenseController {
 
 	@Autowired
-	private ExpenseService expenseService;
+	private ExpenseService service;
 	
 	@GetMapping("/")
-	public String home() {
+	public String index() {
+		
+		return "redirect:/expenses";
+	}
+	
+	@GetMapping("/expenses")
+	public String home(
+			@ModelAttribute("expense") Expense expense,
+			Model model
+			) {
+
+		model.addAttribute("expenses", this.service.all());
+
 		return "home.jsp";
 	}
 	
 	// CREATE
-//	// create page
-//	@GetMapping("/expense/new")
-//	public String home(@ModelAttribute("expenses") Expense anExpenseObject) {
-//		return "home.jsp";
-//	}
-	
 	// create form
 	@PostMapping("/expense/create")
-	public String createExpense(
-			@Valid @ModelAttribute("expenses") Expense anExpenseObject,
+	public String create(
+			@Valid @ModelAttribute("expense") Expense expense,
 			BindingResult result,
 			RedirectAttributes redirectAttributes
 			) {
 		
 		if (result.hasErrors()) return "home.jsp";
 		
-		this.expenseService.create(anExpenseObject);
+		this.service.create(expense);
 		
 		redirectAttributes.addFlashAttribute("message", "A new expense has been added.");
 		
-		return "redirect:/home";
+		return "redirect:/expenses";
 	}
 	
-	// VIEW
+	// READ
 	@GetMapping("/expense/view/{id}")
-	public String viewExpense(
+	public String view(
 			@PathVariable Long id,
-			@ModelAttribute("expenses") Expense anExpenseObject
+			Model model
 			) {
 		
-		this.expenseService.retrieve(id);
+		model.addAttribute("expense", this.service.retrieve(id));
 		
 		return "viewExpense.jsp";
 	}
@@ -65,24 +72,45 @@ public class ExpenseController {
 	// EDIT
 	// edit page
 	@GetMapping("/expense/edit/{id}")
-	public String editExpense(@ModelAttribute("expenses") Expense anExpenseObject) {
+	public String edit(
+			@PathVariable Long id,
+			Model model
+			) {
+		
+		model.addAttribute("expense", this.service.retrieve(id));
+		
 		return "editExpense.jsp";
 	}
+	
 	// edit form
 	@PostMapping("/expense/update/{id}")
-	public String updateExpense(
-			@Valid @ModelAttribute("expenses") Expense anExpenseObject,
+	public String update(
+			@Valid @ModelAttribute("expense") Expense expense,
 			BindingResult result,
 			RedirectAttributes redirectAttributes
 			) {
 		
 		if (result.hasErrors()) return "home.jsp";
 		
-		this.expenseService.create(anExpenseObject);
+		this.service.create(expense);
 		
 		redirectAttributes.addFlashAttribute("message", "A new expense has been added.");
 		
-		return "redirect:/expense/view/{id}";
+		return String.format("redirect:/expense/view/%d", expense.getId());
+	}
+	
+	//DELETE
+	@GetMapping("/expense/delete/{id}")
+	public String delete(
+			@PathVariable Long id,
+			RedirectAttributes redirectAttributes
+			) {
+		
+		this.service.delete(id);
+		
+		redirectAttributes.addFlashAttribute("message", "This expense has been deleted");
+		
+		return "redirect:/expenses";		
 	}
 	
 }

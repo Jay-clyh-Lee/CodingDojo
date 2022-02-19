@@ -36,11 +36,11 @@
                 </thead>
                 <c:forEach var="expense" items="${expenses}">
                     <tr>
-                        <td>
-                            <a href="/expense/<c:out value="${expense.id}"/>">
-                                <c:out value="${expense.name}"/>
-                            </a>
-                        </td>
+                    	<td>
+                    		<a href="/expense/view/<c:out value='${expense.id}'/>">
+                    			<c:out value="${expense.name}"/>
+                    		</a>
+                    	</td>
                         <td>
                             <c:out value="${expense.vendor}"/>
                         </td>
@@ -48,8 +48,8 @@
                             <c:out value="${expense.amount}"/>
                         </td>
                         <td>
-                            <a href="/expense/edit">edit</a> |
-                            <a href="/expense/delete">delete</a>
+                            <a href="/expense/edit/${expense.id}">edit</a> |
+                            <a href="/expense/delete/${expense.id}">delete</a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -59,29 +59,33 @@
 
     <div class="d-flex justify-content-center">
 		<div id="add_form" class="d-flex flex-column align-items-center mt-3">
-			<h3>Add an Expense:</h2>
-			<form:form action="/expense/create" method="post" modelAttribute="expenses">
+			<h2>Add an Expense:</h2>
+			<form:form action="/expense/create" method="post" modelAttribute="expense">
 				<div class="form-group">
-					<form:label path="name">Name:</form:label>
-					<form:errors path="name" class="error"/>
-					<form:input type="text" path="name" class="form-control"/>
+					<form:label path="name">Name:
+						<form:errors path="name" class="error"/>
+						<form:input type="text" path="name" class="form-control"/>
+					</form:label>
 				</div>
 				<div class="form-group">
-					<form:label path="vendor">Vendor:</form:label>
-					<form:errors path="vendor" class="error"/>
-					<form:input type="text" path="vendor" class="form-control"/>
+					<form:label path="vendor">Vendor:
+						<form:errors path="vendor" class="error"/>
+						<form:input type="text" path="vendor" class="form-control"/>
+					</form:label>
 				</div>
 				<div class="form-group">
-					<form:label path="amount">Cost:</form:label>
-					<form:errors path="amount" class="error"/>
-					<form:input type="number" step="0.01" path="amount" class="form-control"/>
+					<form:label path="amount">Cost:
+						<form:errors path="amount" class="error"/>
+						<form:input type="number" step="0.01" path="amount" class="form-control"/>
+					</form:label>
 				</div>
 				<div class="form-group">
-					<form:label path="description">Description:</form:label>
-					<form:errors path="description" class="error"/>
-					<form:input type="text" path="description" class="col-10 row-5 form-control"/>
+					<form:label path="description">Description:
+						<form:errors path="description" class="error"/>
+						<form:input type="text" path="description" class="col-10 row-5 form-control"/>
+					</form:label>
 				</div>
-				<input type="submit" value="Add Expense" class="btn-warning"/>
+				<input type="submit" value="Add Expense" class="btn-warning mt-3"/>
 			</form:form>
 		</div>
 	</div>
