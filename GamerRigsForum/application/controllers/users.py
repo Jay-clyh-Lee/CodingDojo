@@ -1,5 +1,5 @@
 from flask import render_template, request, session, redirect, flash
-from models import user, painting
+from models import user, post
 from __init__ import app
 from flask_bcrypt import Bcrypt  
 
@@ -53,4 +53,4 @@ def dashboard():
     data = {
         "id": session["user_id"]
     }
-    return render_template("dashboard.html", logged_in_user = user.User.get_by_id(data), all_paintings = painting.Painting.get_all(), all_paintings_detailed = painting.Painting.get_all_detailed())
+    return render_template("dashboard.html", logged_in_user = user.User.get_by_id(data), all_posts = post.Post.get_all(), all_posts_detailed = post.Post.get_all_detailed())

@@ -1,5 +1,5 @@
 from flask import render_template, request, session, redirect, flash
-from models import user, painting
+from models import user, post
 from __init__ import app
 from flask_bcrypt import Bcrypt  
 

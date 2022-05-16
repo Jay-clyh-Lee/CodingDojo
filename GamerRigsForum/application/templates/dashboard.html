@@ -9,13 +9,14 @@
     <style>
         a {
             font-style: italic;
+            font-weight: bold;
         }
     </style>
 </head>
 <body class="mx-auto">
     <header>
         <div class="d-flex justify-content-between">
-            <h2>Hi {user.first_name}</h2>
+            <h2 class="text-center">Welcome {{logged_in_user.first_name}} {{logged_in_user.last_name}}!</h2>
             <h3><a href="/logout">logout</a></h3>
         </div>
         <div>

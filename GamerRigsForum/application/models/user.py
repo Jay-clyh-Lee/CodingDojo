@@ -4,6 +4,7 @@ import re
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
 class User:
+    
     db = "gamer_rigs_forum"
 
     def __init__(self, data):
@@ -14,10 +15,10 @@ class User:
         self.password = data['password']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
-        self.purchased_paintings = []
+        self.liked_posts = []
 
     @classmethod
-    def create_user(cls, data):
+    def save(cls, data):
         query = "INSERT INTO users (first_name, last_name, email, password) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s);"
         return connectToMySQL(cls.db).query_db(query,data)
 
@@ -47,25 +48,22 @@ class User:
         return cls(results[0])
 
     @classmethod
-    def get_paintings_by_id(cls,data):
-        query = "SELECT * FROM users JOIN purchases ON purchases.user_id = users.id JOIN paintings ON purchases.painting_id = paintings.id WHERE users.id = %(user_id)s;"
+    def get_posts_by_user_id(cls,data):
+        query = "SELECT * FROM users JOIN likes ON likes.user_id = users.id JOIN posts ON likes.post_id = posts.id WHERE users.id = %(user_id)s;"
         results = connectToMySQL(cls.db).query_db(query,data)
         for row in results:
             this_user = cls(row)
-            painting_data = {
-                "id": row["paintings.id"],
-                'name': row['name'],
-                'description': row['description'],
-                'price': row['price'],  
-                'quantity': row['quantity'],
+            post_data = {
+                "id": row["posts.id"],
+                'comment': row['comment'],
+                'user_id': row['user_id'],
                 'created_at': row['users.created_at'],
                 'updated_at': row['users.updated_at'],
             }
-            this_user.purchased_paintings.append(painting_data)
+            this_user.liked_posts.append(post_data)
         if len(results) == 0:
             return False
         return cls(results[0])
-    
 
     @staticmethod
     def validate_registration(data):
