@@ -23,7 +23,7 @@ class User:
 
     @classmethod
     def get_all(cls):
-        query = "SELECT * FROM users LEFT JOIN trees ON trees.user_id = id;"
+        query = "SELECT * FROM users LEFT JOIN posts ON posts.user_id = id;"
         results = connectToMySQL(cls.db).query_db(query) 
         users = []
         for u in results:
