@@ -50,7 +50,7 @@ class Post:
         for row in results:
             posts_by_this_user.append(cls(row))
         return posts_by_this_user
-        
+
     @classmethod
     def get_all(cls):
         query = "SELECT * FROM posts LEFT JOIN users ON users.id = posts.user_id;"

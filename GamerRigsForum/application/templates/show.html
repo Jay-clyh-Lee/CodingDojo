@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <title>show post</title>
+    <style>
+        text {
+            padding: 0 0 6em 2em;
+            margin-bottom: 1em;
+        }
+        span {
+            padding: 0 0 6em 2em;
+            margin-bottom: 1em;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column mx-auto">
+    <header>
+        <div style="float:right" class="d-flex justify-content-around align-items-center">        
+            <a href="/dashboard" class="m-5 btn btn-success text-white">Dashboard</a>
+            <a href="/logout" class="m-5 btn btn-success text-white">Logout</a>
+        </div>
+    </header>
+    <main>
+        <h3>{{post.user.first_name}} says: {{post.comment}}</h3>
+        {% if user.likers | length != 0 %}
+            <h3>People who liked this post:</h3>
+            <table>
+                <thead>
+                    <th>username</th>
+                    <th>response</th>
+                </thead>
+                <tbody>
+                    {% for person in people %}
+                        <td>{{post.likers.first_name}}</td>
+                        <td>{{post.likers.reponse}}</td>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <h3>No likes yet</h3>
+        {% endif %}
+    </main>
+</body>

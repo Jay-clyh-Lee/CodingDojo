@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <title>show profile</title>
+    <style>
+        text {
+            padding: 0 0 6em 2em;
+            margin-bottom: 1em;
+        }
+        span {
+            padding: 0 0 6em 2em;
+            margin-bottom: 1em;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column mx-auto">
+    <header>
+        <div style="float:right" class="d-flex justify-content-around align-items-center">        
+            <a href="/dashboard" class="m-5 btn btn-success text-white">Dashboard</a>
+            <a href="/logout" class="m-5 btn btn-success text-white">Logout</a>
+        </div>
+    </header>
+    <main>
+        <p><h4>author: {{post.user.first_name}} {{post.user.last_name}}</h4></p>
+        <p><h4>{{post.user.email}}</h4></p>
+        <p>===========================</p>
+        <p>number of posts: {{post.user.posts | LENGTH }} </p>
+        <p>number of likes: {{post.user.likes | LENGTH }} </p>
+
+<!-- 
+            <span class="mb-3">{{post.likers | LENGTH}}</span>
+            {% if post.likers | LENGTH == 0 %}
+                <p>No one liked this post yet</p>
+            {% elif logged_in_user.id == post.user_id %}
+                <p>Current Quantity: {{post.quantity}} </p>
+                <text>(You shouldn't buy your own post)</text>
+            {% else %}
+            <form action="/posts/{{post.id}}/buy" method="post">
+                <input type="submit" class="m-5 btn btn-success text-white" value="Buy">
+            </form>
+            {% endif %} -->
+    </main>
+</body>
