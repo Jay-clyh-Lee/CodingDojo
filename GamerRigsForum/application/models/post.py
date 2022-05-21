@@ -135,7 +135,7 @@ class Post:
             #     "email": row["email"],
             #     "password": row["password"],
             }
-        user = User.get_user(user_data)
+        this_user = user.User.get_user(user_data)
         likers = []
         for row in results:
             liker_data = {
@@ -146,8 +146,8 @@ class Post:
                 "user_id": row["likers.user_id"],
                 # "post_id": row["likers.post_id"],
             }    
-            likers.append(User.get_user(liker_data))
-        this_post.append(user)
+            likers.append(user.User.get_user(liker_data))
+        this_post.append(this_user)
         this_post += likers
         return this_post
 

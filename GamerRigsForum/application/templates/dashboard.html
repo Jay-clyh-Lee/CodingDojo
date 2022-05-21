@@ -20,7 +20,7 @@
             <h3><a href="/logout">logout</a></h3>
         </div>
         <div>
-            <form action="/create/post" method="POST">
+            <form action="/post/create" method="POST">
                 <label for="posting">Ask a question or write a review:</label>
                 <input type="text" name="posting">
             </form>
@@ -29,10 +29,10 @@
     
     <main class="">
         {% for post in posts %}
-            <a href="/profile/{user.id}">{{post.user.first_name}}</a>
+            <a href="/profile/{{post.user_id}}">{{post.user.first_name}}</a>
             {% if user.id != logged_in_user.id %}
                 <a href="">Like</a>
-            <a href="/user_who_liked">{{likes.count}} liked this.</a>                
+                <a href="/post/show/{{posts.id}}">{{post.likers | count}} people liked this.</a>                
         {% endfor %}
     </main>
     
