@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>dashboard</title>
+    <style>
+        a {
+            font-style: italic;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="mx-auto">
+    <header>
+        <div class="d-flex justify-content-between">
+            <h2 class="text-center">Welcome {{logged_in_user.first_name}} {{logged_in_user.last_name}}!</h2>
+            <a href="/logout" class="btn btn-success text-white">Logout</a>
+        </div>
+        <div>
+            <form action="/posts/create" method="POST">
+                <div class="bg-dark text-danger">
+                    {% with messages = get_flashed_messages(category_filter=['post']) %}
+                        {% if messages %}
+                        <div class="alert alert-danger" role="alert">
+                            <h2>Error!</h2>
+                                {% for message in messages %}            
+                                    <p>{{message}}</p>                    
+                                {% endfor %}
+                        </div>                            
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                <label for="comment">Ask a question or write a review:</label>
+                <input type="text" name="comment">
+                <input type="submit" value="Submit" class="my-3 btn btn-primary text-white">
+            </form>
+        </div>
+    </header>
+    
+    <main class="mt-10 col-5 border border-2 border-dark">
+        {% for post in posts %}
+            <div style="overflow:auto" class="d-flex justify-content-between align-items-center border-bottom border-3 border-dark p-3">
+                <div>
+                    <p>{{post.user.first_name}} - {{post.created_at.strftime('%m/%d/%Y')}}</p>
+                    <p>Posted by: {{post.user.first_name}} {{post.user.last_name}}</p>
+                    <p>{{post.comment}}</p>
+                </div>
+                <div>
+                    {% if logged_in_user.id == post.user.id %}
+                        <a class="btn btn-primary" href="/posts/edit/{{post.id}}">Edit</a>
+                        <a class="btn btn-primary" href="/posts/delete/{{post.id}}">Delete</a>
+                    {% else %}
+                        <a class="btn btn-primary" href="/posts/showUser/{{post.user.id}}">{{post.user.first_name}}</a>
+                        <a href="/posts/show/{{post.id}}">{{post.likers | count}} people liked this.</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </main>    
+</body>
+</html>

@@ -1,5 +1,5 @@
 from config.mysqlconnection import connectToMySQL
-from application.models import user
+from models import user
 from flask import flash
 
 class Post:
@@ -7,6 +7,7 @@ class Post:
     db = "gamer_rigs_forum"
     
     def __init__(self, data):
+        self.id = data['id']
         self.comment = data['comment']
         self.user_id = data['user_id']
         self.created_at = data['created_at']
@@ -16,12 +17,12 @@ class Post:
 
     @classmethod
     def save(cls, data):
-        query = "INSERT INTO posts VALUES (comment, user_id) %(comment)s, %(user_id)s"
+        query = "INSERT INTO posts (comment, user_id) VALUES (%(comment)s, %(user_id)s);"
         return connectToMySQL(cls.db).query_db(query, data)
     
     @classmethod
     def update(cls, data):
-        query = "UPDATE posts SET comment = %(comment)s, user_id = %(user_id)s WHERE posts.id = %(id)s"
+        query = "UPDATE posts SET comment = %(comment)s, user_id = %(user_id)s WHERE posts.id = %(id)s;"
         return connectToMySQL(cls.db).query_db(query, data)
     
     @classmethod
@@ -30,17 +31,22 @@ class Post:
         return connectToMySQL(cls.db).query_db(query, data)
 
     @classmethod
-    def get_posts_with_user(cls, data):
-        query = "SELECT * FROM posts LEFT JOIN users ON posts.user_id = posts.id WHERE posts.id = %(id)s;"
-        results = connectToMySQL(cls.db).query_db(query, data)         
-        posts = []
+    def get_by_id(cls,data):
+        query = "SELECT * FROM posts LEFT JOIN users ON users.id = user_id WHERE posts.id = %(id)s;"
+        results = connectToMySQL(cls.db).query_db(query,data) 
         for row in results:
-            posts.append(cls(row))
-            user_data = {
-                "id" : row["user_id"],
+            this_post = cls(row)
+            user_data = { 
+                'id': row['users.id'],
+                'first_name': row['first_name'],
+                'last_name': row['last_name'],
+                'email': row['email'],  
+                'password': row['password'],
+                'created_at': row['users.created_at'],
+                'updated_at': row['users.updated_at'],
             }
-            # posts.append(User.get_user(user_data))
-        return posts
+            this_post.user = user.User(user_data)
+        return this_post
 
     @classmethod
     def get_post_by_user(cls, data):
@@ -50,6 +56,12 @@ class Post:
         for row in results:
             posts_by_this_user.append(cls(row))
         return posts_by_this_user
+
+    @classmethod
+    def getAll(cls):
+        query = "SELECT * FROM posts;"
+        results = connectToMySQL(cls.db).query_db(query) 
+        return results
 
     @classmethod
     def get_all(cls):
@@ -157,7 +169,7 @@ class Post:
     ## add profanity filter API
     def validate_post(form_data):
         is_valid = True
-        if form_data['comment'] < 30:
-            flash("At least 30 characters are required.", "post")
+        if len(form_data['comment']) < 2:
+            flash("At least 2 characters are required.", "post")
             is_valid = False
         return is_valid

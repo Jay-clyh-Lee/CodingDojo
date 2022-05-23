@@ -20,7 +20,7 @@ class User:
     @classmethod
     def save(cls, data):
         query = "INSERT INTO users (first_name, last_name, email, password) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s);"
-        return connectToMySQL(cls.db).query_db(query,data)
+        return connectToMySQL(cls.db).query_db(query, data)
 
     @classmethod
     def get_all(cls):
@@ -34,7 +34,7 @@ class User:
     @classmethod
     def get_by_email(cls,data):
         query = "SELECT * FROM users WHERE email = %(email)s;"
-        results = connectToMySQL(cls.db).query_db(query,data)
+        results = connectToMySQL(cls.db).query_db(query, data)
         if len(results) == 0:
             return False
         return cls(results[0])
@@ -42,15 +42,40 @@ class User:
     @classmethod
     def get_by_id(cls,data):
         query = "SELECT * FROM users WHERE id = %(id)s;"
-        results = connectToMySQL(cls.db).query_db(query,data)
+        results = connectToMySQL(cls.db).query_db(query, data)
         if len(results) == 0:
             return False
         return cls(results[0])
 
     @classmethod
+    def get_by_id_with_posts(cls,data):
+        query = "SELECT * FROM users LEFT JOIN posts ON users.id = posts.user_id WHERE posts.user_id = %(id)s;"
+        results = connectToMySQL(cls.db).query_db(query, data)
+        this_user = []
+        print("RESULTS", results)
+        for row in results:
+            # user_data = { 
+            #     'id': row['users.id'],
+            #     'first_name': row['first_name'],
+            #     'last_name': row['last_name'],
+            #     'email': row['email'],  
+            #     'password': row['password'],
+            #     'created_at': row['users.created_at'],
+            #     'updated_at': row['users.updated_at'],
+            # }
+
+            print("###################################", row)
+            this_user.append(cls(row))
+        return this_user
+        # if len(results) == 0:
+        #     return False
+        # print(cls(results[0]))
+        # return cls(results[0])
+
+    @classmethod
     def get_posts_by_user_id(cls,data):
         query = "SELECT * FROM users JOIN likes ON likes.user_id = users.id JOIN posts ON likes.post_id = posts.id WHERE users.id = %(user_id)s;"
-        results = connectToMySQL(cls.db).query_db(query,data)
+        results = connectToMySQL(cls.db).query_db(query, data)
         for row in results:
             this_user = cls(row)
             post_data = {
@@ -85,7 +110,7 @@ class User:
             flash("Email already taken.", "register")
             is_valid=False
         # for passwords
-        if len(data['password']) < 8:
+        if len(data['password']) < 6:
             flash("Password must be at least 8 characters long", "register")
             is_valid=False
         if data['password'] != data['confirm_password']:

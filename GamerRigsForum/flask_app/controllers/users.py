@@ -20,7 +20,7 @@ def register():
         "email": request.form['email'],
         "password": pw_hash
     }
-    session['user_id'] = user.User.create_user(user_data)
+    session['user_id'] = user.User.save(user_data)
     return redirect('/dashboard')
 
 @app.route('/login', methods=['POST'])
@@ -53,4 +53,4 @@ def dashboard():
     data = {
         "id": session["user_id"]
     }
-    return render_template("dashboard.html", logged_in_user = user.User.get_by_id(data), all_posts = post.Post.get_all(), all_posts_detailed = post.Post.get_all_detailed())
+    return render_template("dashboard.html", logged_in_user = user.User.get_by_id(data), posts = post.Post.get_all())
