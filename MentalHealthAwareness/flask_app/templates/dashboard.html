@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <title>Profile</title>
+    <style>
+        p {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column mx-auto">
+    <header>
+        <div class="d-flex justify-content-between align-items-center">
+            <h1>Profile</h1>
+            <h2 class="text-center">{{logged_in_user.first_name}}, {{logged_in_user.last_name}}</h2>
+        </div>
+        <div style="float:right" class="d-flex flex-column">
+            <a href="/tests/new" class="my-3 btn btn-primary text-white">Take a test</a>
+            <!-- <a href="/profile" class="my-3 btn btn-success text-white">Edit profile</a> -->
+            <a href="/logout" class="col-9 my-3 btn btn-warning text-white">Logout</a>
+        </div>
+    </header>
+    <h4>Past Tests:</h4>
+    <main class="mt-10 col-5 border border-2 border-dark">
+        {% for test in all_tests %}
+            <div style="overflow:auto" class="d-flex justify-content-between align-items-center border-bottom border-3 border-dark p-3">
+                <div>
+                    <p>Test score: {{test.result}}</p>
+                    <p>Taken on: {{test.created_at.strftime('%m/%d/%Y')}}</p>
+                    <!-- below would be for doctor/admin only
+                    A patient/user should not be able to see others' test results -->
+                    <!-- <p>Test Taker: {{test.user.first_name}} {{test.user.last_name}}</p> -->
+                </div>
+                <div>
+                    <a class="btn btn-primary" href="/tests/show/{{test.id}}">View</a>
+                </div>
+                
+                <!--If user is a doctor or admin: -->
+                <!--
+                <div>
+                    {% if logged_in_user.id == test.user.id %}
+                        <a class="btn btn-primary" href="/tests/edit/{{test.id}}">Edit</a>
+                        <a class="btn btn-primary" href="/tests/delete/{{test.id}}">Delete</a>
+                    {% else %}
+                        <a class="btn btn-primary" href="/tests/show/{{test.id}}">View</a>
+                    {% endif %}
+                </div> -->
+            </div>
+        {% endfor %}
+    </main>
+</body>
+</html>
+
+

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <title>Sasquatch Websighting</title>
+</head>
+<body class="d-flex flex-column mx-auto">
+    <header>
+        <div class="d-flex justify-content-between align-items-center">
+            <h1>Sasquatch Websighting</h1>
+            <h2 class="text-center">{{logged_in_user.first_name}}, {{logged_in_user.last_name}}</h2>
+        </div>
+        <div style="float:right" class="d-flex flex-column">
+            <a href="/dashboard" class="my-3 btn btn-success ">Dashboard</a>
+            <a href="/logout" class="col-9 my-3 btn btn-success ">Logout</a>
+        </div>
+    </header>
+    <form action="/sasquatches/update/{{sasquatch.id}}" method="post" class="mx-auto bg-light rounded p-5">
+        <h1 class="mx-5 my-3 text-primary">Edit this Sighting</h1>
+        <div class="mx-5 my-3 text-danger">
+            {% with messages = get_flashed_messages(category_filter=['sasquatch']) %}
+                {% if messages %}
+                <div class="alert alert-danger" role="alert">
+                    <h2>Error!</h2>
+                        {% for message in messages %}            
+                            <p>{{message}}</p>                    
+                        {% endfor %}
+                </div>                            
+                {% endif %}
+            {% endwith %}
+        </div>
+        <div class="d-flex">
+            <div id="left-panel">
+                <div class="d-flex flex-column mx-5">
+                    <label for="location">Location:</label>
+                    <input type="text" name="location" value="{{sasquatch.location}}">
+                </div>
+                <div class="d-flex flex-column mx-5">
+                    <label class="my-3" for="description">What Happened:</label>
+                    <input type="text" name="description" value="{{sasquatch.description}}" class="py-5">
+                </div>
+            </div>
+            <div id="right-panel">
+                <div class="d-flex flex-column mx-5">
+                    <label for="date_sighted">Date of Sighting:</label>
+                    <input type="date" name="date_sighted" value="{{sasquatch.date_sighted}}">
+                </div>
+                <div class="d-flex flex-column mx-5">
+                    <label class="my-3" for="count"># of Sasquatches:</label>
+                    <input type="number" name="count" value="{{sasquatch.count}}">
+                </div>
+            </div>
+        </div>
+        <input type="submit" value="Report" class="mx-5 my-3 btn btn-primary ">
+    </form>
+</body>
