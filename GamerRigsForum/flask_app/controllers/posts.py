@@ -31,7 +31,6 @@ def show(poster_id):
     }
     return render_template("show.html", logged_in_user = user.User.get_by_id(user_data), post_user = user.User.get_by_id_with_posts(poster_data))
 
-    
 @app.route('/posts/edit/<int:post_id>')
 def edit(post_id):
     user_data = {
